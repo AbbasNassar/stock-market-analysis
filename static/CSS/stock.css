@@ -2,7 +2,12 @@ h1, h2{
     font-family:monospace;
     font-weight: 600 !important;
 }
-
+span{
+    font-family:'Courier New', Courier, monospace ;
+    font-weight: 600 !important;
+    color: #FFFFFF !important;
+    font-size: 20px;
+}
 body{
     height: 100vh;
     display: flex;
@@ -18,9 +23,9 @@ body .header{
     display: flex;
     justify-content: flex-start;
     align-content: center !important;
-    flex-wrap: wrap;
     column-gap: 5px;
     box-shadow: 0px 0px 119px -10px rgba(92,92,92,1);
+    flex-wrap: wrap;
 }
 body .header div{
     display: flex;
@@ -44,26 +49,38 @@ body .body{
     align-items: flex-start;
     gap: 20px;
 }
-body .body table {
-    width: 98%;
-    margin: auto;
-    border-spacing: 0;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0px 0px 102px -52px rgba(0,0,0,0.75);
-}
-
-body .body h2 {
-    font-size: 18px;
-}
-body .body table td,
-body .body table th {
-    border: none; /* Ensure no extra borders on cells */
+body .body table{
+    width: 80%;
 }
 body .body table thead tr{
     text-align: left !important;
 }
 body .body table tr{
     cursor: pointer;
-    font-family:monospace;
+    font-family:Arial, Helvetica, sans-serif;
 }
+body .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+body input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+body input[type="text"]:focus {
+            border-color: #007bff;
+        }
+
+body input[type="text"]::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+
