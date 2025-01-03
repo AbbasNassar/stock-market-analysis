@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     rows.forEach(row => {
         row.addEventListener('click', () => {
-            const stockName = row.cells[0]?.textContent.trim(); // Get stock name from the first cell
-            if (stockName && stockName !== "Stock") { // Ensure a valid stock name is clicked
+            const stockName = row.cells[0]?.textContent.trim();
+            if (stockName && stockName !== "Stock") {
                 fetch('/table', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(response => {
                     if (response.redirected) {
-                        // If the response includes a redirection URL, navigate to it
                         window.location.href = response.url;
                     } else {
                         return response.json();
@@ -20,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(data => {
                     if (data.error) {
-                        alert(data.error); // Show an error message if the response includes one
+                        alert(data.error);
                     }
                 })
                 .catch(error => {

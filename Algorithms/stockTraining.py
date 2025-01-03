@@ -1,4 +1,3 @@
-import os
 from datetime import timedelta, datetime
 
 import numpy as np
@@ -9,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
+
 
 
 def calculate_rsi(data, window=14):
@@ -24,21 +24,20 @@ def calculate_rsi(data, window=14):
 
 
 def classify_action(row):
-    # Buy conditions
+
     if (row['RSI'] < 30 and
             row['Close'] <= row['Lower Band'] and
             row['Return'] < 0 and
-            row['Volume'] > row['Volume_Rolling_Mean']):  # High volume
+            row['Volume'] > row['Volume_Rolling_Mean']):
         return 1  # Buy
 
-    # Sell conditions
     elif (row['RSI'] > 70 and
           row['Close'] >= row['Upper Band'] and
           row['Return'] > 0 and
-          row['Volume'] < row['Volume_Rolling_Mean']):  # Low volume
+          row['Volume'] < row['Volume_Rolling_Mean']):
         return -1  # Sell
 
-    # Default to Hold if none of the above conditions match
+
     else:
         return 0  # Hold
 
@@ -51,39 +50,21 @@ def calculate_bollinger_bands(window_df, column='Target', window=14, num_std_dev
     return window_df
 
 
-from datetime import datetime, timedelta
-
 def find_matching_date(self, first_date):
-    """
-    Find the first matching date in self.df where 'Date' is the index.
-    If `first_date` is not in the DataFrame, increment by one day until a match is found.
 
-    Parameters:
-    first_date (str): The starting date in 'YYYY-MM-DD' format.
-
-    Returns:
-    str: The first matching date as a string in 'YYYY-MM-DD' format.
-    """
-
-    # Convert the first_date to a datetime object
     current_date = datetime.strptime(first_date, "%Y-%m-%d")
 
-    # Ensure the index is in datetime format
     if not isinstance(self.df.index, pd.DatetimeIndex):
         self.df.index = pd.to_datetime(self.df.index, errors='coerce')
 
-    # Filter available dates to include only dates after the current_date
     available_dates = set(self.df.index[self.df.index > current_date].date)
 
-    # Check if there are any available dates after the current_date
     if not available_dates:
         raise ValueError("No available dates after the specified first_date.")
 
-    # Increment day by day until a match is found
     while current_date.date() not in available_dates:
         current_date += timedelta(days=1)
 
-    # Return the matching date as a string
     return current_date.strftime("%Y-%m-%d")
 
 
@@ -95,12 +76,7 @@ def create_sequences(x, y, lookback=5):
     return np.array(xs), np.array(ys)
 
 def df_to_windowed_df(dataframe, first_date_str, last_date_str, n):
-    """
-    Create a windowed DataFrame for LSTM modeling.
-    dataframe: DataFrame with a DatetimeIndex
-    first_date_str, last_date_str: strings like '2019-04-01'
-    n: number of past observations to use in each window
-    """
+
     first_date = pd.to_datetime(first_date_str)
     last_date = pd.to_datetime(last_date_str)
 
@@ -134,7 +110,7 @@ def df_to_windowed_df(dataframe, first_date_str, last_date_str, n):
 
     ret_df = pd.DataFrame()
     ret_df['Target Date'] = dates
-    X = np.array(X)  # Ensure X is a 2D array
+    X = np.array(X)
     Y = np.array(Y)
 
     for i in range(n):
@@ -152,7 +128,7 @@ class Analysis:
         self.df['Return'] = (self.df['Close'] - self.df['Close'].shift(1)) / self.df['Close'].shift(1)
 
     def load_data(self):
-        """Load the stock data from the CSV file and return a DataFrame."""
+
         try:
             df = pd.read_csv(self.stock_file)
             df['Date'] = pd.to_datetime(df['Date'], errors='coerce', format="mixed")
@@ -163,7 +139,7 @@ class Analysis:
             return None
 
     def get_close_plot(self):
-        """Generate a Close Price plot and save it as an image."""
+
         if self.df is None:
             print("DataFrame is not loaded. Cannot generate plot.")
             return None
@@ -171,16 +147,16 @@ class Analysis:
         plt.figure(figsize=(10, 6))
         plt.plot(self.df.index, self.df['Close'], label='Close Price', linewidth=2)
 
-        # Adding title and labels
+
         plt.title(f'Close Price Over Time for {self.stock_name}', fontsize=16)
         plt.xlabel('Date', fontsize=12)
         plt.ylabel('Close Price', fontsize=12)
         plt.grid(True)
 
-        # Show legend
+
         plt.legend()
 
-        # Save the plot to a file
+
         plot_path = f"static/Images/{self.stock_name}_close_plot.png"
         plt.savefig(plot_path)
         plt.close()
@@ -189,13 +165,13 @@ class Analysis:
     def get_rsi_plot(self):
         self.df['RSI'] = calculate_rsi(self.df['Close'])
         self.df = self.df.dropna()
-        # Determine the last date in the DataFrame
+
         last_date = self.df.index.max()
 
-        # Calculate the cutoff date (one year before the last date)
+
         cutoff_date = last_date - timedelta(days=365)
 
-        # Filter the DataFrame to get rows within one year before the last date
+
         part_df = self.df[self.df.index > cutoff_date]
 
         plt.figure(figsize=(12, 6))
@@ -211,16 +187,17 @@ class Analysis:
         plt.close()
         return plot_path
 
+
     def get_bollinger_bands_plot(self):
         self.df = calculate_bollinger_bands(self.df, column='Close', window=14, num_std_dev=2)
         self.df = self.df.dropna()
         last_date = self.df.index.max()
         self.df['Action'] = self.df.apply(classify_action, axis=1)
 
-        # Calculate the cutoff date (one year before the last date)
+
         cutoff_date = last_date - timedelta(days=365)
 
-        # Filter the DataFrame to get rows within one year before the last date
+
         part_df = self.df[self.df.index > cutoff_date]
         plt.figure(figsize=(12, 6))
         plt.plot(part_df['Close'], label='Close Price', color='blue')
@@ -241,24 +218,23 @@ class Analysis:
         self.df['Action'] = self.df.apply(row.classify_action, axis=1)
         return self.df['Action']
 
+
     def train_model_with_df(self, test_size):
         feature_columns = ['Close', 'Return', 'RSI', 'Upper Band', 'Lower Band', 'Middle Band', 'Volume']
         X = self.df[feature_columns]
         y = self.df['Action']
 
-        # Standardize the features
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
 
-        # Train-test split
+
         X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=test_size, random_state=42)
         clf = DecisionTreeClassifier(criterion='gini', max_depth=5, random_state=42)
         clf.fit(X_train, y_train)
 
-        # Evaluate the model
         y_pred = clf.predict(X_test)
 
-        # Visualize the decision tree
+
         plt.figure(figsize=(12, 8))
         plot_tree(clf, feature_names=feature_columns, class_names=["Hold", "Sell", "Buy"], filled=True)
         plt.title("Decision Tree for Stock Trading")
@@ -266,6 +242,7 @@ class Analysis:
         plt.savefig(plot_path)
         plt.close()
         return classification_report(y_test, y_pred), confusion_matrix(y_test, y_pred), accuracy_score(y_test, y_pred), plot_path
+
 
     def train_model_with_KNN(self, test_size, n, lookback):
         first_date = '2019-04-01'
@@ -283,7 +260,7 @@ class Analysis:
         X = window_df[feature_columns].values
         y = window_df['Target'].values
 
-        # Standard scaling
+
         scaler_X = StandardScaler()
         scaler_y = StandardScaler()
 
@@ -299,7 +276,7 @@ class Analysis:
         num_samples = X_seq.shape[0]
         train_samples = int((1 - test_size) * num_samples)
 
-        # Prepare data for KNN
+
         X_knn = X_scaled
         y_knn = y_scaled.flatten()
 
@@ -307,18 +284,15 @@ class Analysis:
         y_train_knn = y_knn[:train_samples]
         X_test_knn = X_knn[train_samples:]
         y_test_knn = y_knn[train_samples:]
-        # -------------------------------------------------------------------
-        # 8) Train & Evaluate KNN
-        # -------------------------------------------------------------------
         knn = KNeighborsRegressor(n_neighbors=5)
         knn.fit(X_train_knn, y_train_knn)
 
-        # Predict with KNN
+
         y_pred_knn_scaled = knn.predict(X_test_knn)
         y_pred_knn = scaler_y.inverse_transform(y_pred_knn_scaled.reshape(-1, 1)).flatten()
         y_true_knn = scaler_y.inverse_transform(y_test_knn.reshape(-1, 1)).flatten()
 
-        # Evaluate KNN
+
         mse_knn = mean_squared_error(y_true_knn, y_pred_knn)
         r2_knn = r2_score(y_true_knn, y_pred_knn)
         mape_knn = np.mean(np.abs((y_true_knn - y_pred_knn) / y_true_knn)) * 100

@@ -5,8 +5,7 @@ h1, h2{
 span{
     font-family:'Courier New', Courier, monospace ;
     font-weight: 600 !important;
-    color: #FFFFFF !important;
-    font-size: 20px;
+    font-size: 16px;
 }
 body{
     height: 100vh;
@@ -14,7 +13,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 10vh;
+    gap: 20px;
 }
 body .header{
     height: 60px;
@@ -46,25 +45,115 @@ body .body{
     padding: 7.5px 10px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: flex-start;
-    gap: 20px;
+    gap: 50px;
 }
-body .body table{
-    width: 80%;
+body .body .company_name{
+     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0px 0px 72px -10px rgba(0,0,0,0.38);
+    width: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
 }
-body .body table thead tr{
-    text-align: left !important;
+body .body .company_name h2{
+    font-size: 20px;
+    margin: auto;
 }
-body .body table tr{
-    cursor: pointer;
-    font-family:Arial, Helvetica, sans-serif;
+body .body .close_value_plot{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0px 0px 72px -10px rgba(0,0,0,0.38);
+    width: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
 }
-body .input-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+body .body .close_value_plot img{
+    margin:auto;
+}
+body .body .stock_rsi_plot{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0px 0px 72px -10px rgba(0,0,0,0.38);
+    width: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+body .body .stock_rsi_plot img{
+    margin:auto;
+}
+body .body .stock_bollinger_bands_plot{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0px 0px 72px -10px rgba(0,0,0,0.38);
+    width: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+body .body .stock_bollinger_bands_plot img{
+    margin:auto;
+}
+body .body .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0px 0px 72px -10px rgba(0,0,0,0.38);
+    width: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+body .body #result{
+    width: 100%;
+    padding: 7.5px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 50px;
+}
+body .body #result .stock_analysis_with_dt{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 0px 72px -10px rgba(0,0,0,0.38);
+    width: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+body .body #result .stock_analysis_with_dt div pre{
+    font-size: 18px;
+}
+body .body #result .stock_analysis_with_knn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 0px 72px -10px rgba(0,0,0,0.38);
+    width: 100%;
+    padding: 30px 30px;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+body .body #result .stock_analysis_with_knn div pre{
+    font-size: 18px;
+}
 body input[type="text"] {
             width: 200px;
             padding: 10px;
@@ -82,5 +171,5 @@ body input[type="text"]:focus {
 body input[type="text"]::placeholder {
             color: #aaa;
             font-style: italic;
-        }
+}
 

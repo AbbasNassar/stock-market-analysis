@@ -18,24 +18,26 @@
     </div>
     <div class="body">
         <input type="hidden" id="stockName" name="stockName" value="{{ stockName }}">
-        <h2>{{ stock }}</h2>
+        <div class="company_name">
+            <h2>{{ stock }}</h2>
+        </div>
         <div class="close_value_plot">
-        <span>This graph shows the history of the closing value of {{ stock }} stock</span>
+        <span>This graph shows the history of the closing value of {{ stock }} stock.</span>
         <img src="{{ close_plot_url }}" alt="Close Price Plot" class="img-fluid" />
         </div>
         <div class="stock_rsi_plot">
-        <span>This graph shows RSI indicator (Relative strength index) of {{ stock }} stock. If the value of the RSI is equal to 70 or above, this means that the stock is being overbought.</span>
+        <span>The Relative Strength Index (RSI) is a momentum oscillator used in technical analysis to measure the speed and change of price movements of a financial asset. It oscillates between 0 and 100, with values above 70 typically signaling that an asset may be overbought, while values below 30 suggest it may be oversold. Traders use RSI to identify potential reversal points, confirm trends, or spot divergences between the indicator and price action, helping to make informed decisions in both bullish and bearish markets.</span>
         <img src="{{ rsi_plot_url }}" alt="RSI Plot" class="img-fluid" />
         </div>
         <div class="stock_bollinger_bands_plot">
-        <span>This graph shows Bollinger Band chart characterizes the prices and volatility over time of a financial instrument or commodity.</span>
+        <span>Bollinger Bands are a technical analysis tool that consists of three lines plotted on a price chart: a simple moving average (SMA) in the middle, and two standard deviation bands above and below the SMA. These bands expand and contract based on market volatility, providing a dynamic range for price action. When prices touch or break the upper band, it may signal overbought conditions, while interaction with the lower band can indicate oversold conditions. Bollinger Bands are used to identify trends, volatility, and potential reversal points, aiding traders in making strategic decisions.</span>
         <img src="{{ bollinger_band_plot_url }}" alt="Bollinger Band Plot" class="img-fluid" />
         </div>
         <div class="input-container">
         <form id="inputForm">
         <span> Enter the test sample size:</span>
         <input type="text"  id="userInput" placeholder="0.x">
-        <button type="button" onclick="sendValue()">Submit</button>
+        <button type="button" class="btn btn-outline-secondary" onclick="sendValue()">Submit</button>
         </form>
         </div>
         <div id="result"></div>

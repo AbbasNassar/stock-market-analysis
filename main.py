@@ -5,9 +5,8 @@ import numpy as np
 
 from Algorithms.stockTraining import Analysis
 import pandas as pd
-from flask import Flask, jsonify, request, render_template, url_for, redirect
+from flask import Flask, request, render_template, url_for, redirect
 
-# Create a Flask app instance
 app = Flask(__name__)
 
 stock_files = [
@@ -34,7 +33,6 @@ company_names = {
 @app.route('/')
 def home():
 
-    # Initialize an empty DataFrame to store last rows
     combined_last_rows = pd.DataFrame()
 
     for file, stock_name in stock_files:
@@ -50,8 +48,8 @@ def home():
 @app.route('/table', methods=['POST'])
 def table():
     if request.method == 'POST':
-        data = request.get_json()  # Retrieve JSON data
-        stock_name = data.get('stock_name')  # Extract stock_name
+        data = request.get_json()
+        stock_name = data.get('stock_name')
         if stock_name != "Stock":
             print(stock_name)
             return redirect(url_for('render_stock_data', stock_name=stock_name))

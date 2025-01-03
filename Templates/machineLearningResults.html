@@ -1,5 +1,6 @@
 <div class="stock_analysis_with_dt">
-<pre>
+    <div>
+        <pre>
 Classification Report:
 {{ classification_report }}
 
@@ -9,13 +10,16 @@ Confusion Matrix:
 {{ confusion_matrix }}
 
 </pre>
+    </div>
 <img src="{{ dt_plot_url }}" alt="dt plot" class="img-fluid" />
 </div>
 <div class="stock_analysis_with_knn">
-<pre>
+    <div>
+        <pre>
 mse_knn: {{ mse_knn }}
 r2_knn: {{ mape_knn }}
 accuracy_knn: {{accuracy_knn}}
 </pre>
+    </div>
 <img src="{{ knn_plot_url }}" alt="dt plot" class="img-fluid" />
 </div>
