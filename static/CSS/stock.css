@@ -138,7 +138,10 @@ body .body #result .stock_analysis_with_dt{
     border-radius: 20px;
 }
 body .body #result .stock_analysis_with_dt div pre{
-    font-size: 18px;
+    font-size: 12px;
+}
+body .body #result .stock_analysis_with_dt img{
+    width: 50%;
 }
 body .body #result .stock_analysis_with_knn{
     display: flex;
@@ -152,7 +155,10 @@ body .body #result .stock_analysis_with_knn{
     border-radius: 20px;
 }
 body .body #result .stock_analysis_with_knn div pre{
-    font-size: 18px;
+    font-size: 12px;
+}
+body .body #result .stock_analysis_with_knn img {
+    width: 50%;
 }
 body input[type="text"] {
             width: 200px;

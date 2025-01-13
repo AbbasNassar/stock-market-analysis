@@ -25,16 +25,12 @@ def calculate_rsi(data, window=14):
 
 def classify_action(row):
 
-    if (row['RSI'] < 30 and
-            row['Close'] <= row['Lower Band'] and
-            row['Return'] < 0 and
-            row['Volume'] > row['Volume_Rolling_Mean']):
+    if (row['RSI'] < 45 and
+            row['Return'] < 0):
         return 1  # Buy
 
-    elif (row['RSI'] > 70 and
-          row['Close'] >= row['Upper Band'] and
-          row['Return'] > 0 and
-          row['Volume'] < row['Volume_Rolling_Mean']):
+    elif (row['RSI'] > 55 and
+          row['Return'] > 0):
         return -1  # Sell
 
 
@@ -220,13 +216,12 @@ class Analysis:
 
 
     def train_model_with_df(self, test_size):
-        feature_columns = ['Close', 'Return', 'RSI', 'Upper Band', 'Lower Band', 'Middle Band', 'Volume']
+        feature_columns = ['Open', 'High', 'Low', 'Close', 'Volume', 'RSI', 'Lower Band', 'Upper Band', 'Middle Band']
         X = self.df[feature_columns]
         y = self.df['Action']
 
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
-
 
         X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=test_size, random_state=42)
         clf = DecisionTreeClassifier(criterion='gini', max_depth=5, random_state=42)
@@ -253,8 +248,7 @@ class Analysis:
         window_df = calculate_bollinger_bands(window_df, column='Target', window=14, num_std_dev=2)
         window_df.dropna(inplace=True)
         feature_columns = [
-            'Target-3', 'Target-2', 'Target-1',
-            'Return', 'RSI', 'Middle Band', 'Upper Band', 'Lower Band'
+            'Target-3', 'Target-2', 'Target-1', 'Return', 'RSI',
         ]
 
         X = window_df[feature_columns].values
