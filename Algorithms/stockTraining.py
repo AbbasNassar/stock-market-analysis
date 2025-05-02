@@ -7,6 +7,8 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
+import matplotlib
+matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
 
 
